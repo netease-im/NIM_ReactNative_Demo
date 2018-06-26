@@ -1,0 +1,18 @@
+{
+    "git.ignoreMissingGitWarning": true,
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "window.zoomLevel": 0,
+    "editor.fontSize": 14,
+    "editor.tabSize": 2,
+    "javascript.implicitProjectConfig.experimentalDecorators": true,
+    "eslint.enable": true,
+    "eslint.packageManager": "yarn",
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "html",
+      "vue"
+    ],
+    "java.configuration.updateBuildConfiguration": "disabled"
+  }
