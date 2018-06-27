@@ -10,8 +10,15 @@
 3. 通过`yarn`或`npm`安装js包依赖，即工程目录下，命令行执行：`yarn`或`npm install`
 4. Demo工程已对依赖做过了相应的配置，**无需再执行 react-native link 命令**，否则会报重复依赖的错误！！！
 5. 打开模拟器或者连接真机调试：
-  - iOS环境： `react-native run-ios`
-  - 安卓环境： `react-native run-android`
+  - iOS环境：
+    - iOS需要实现保证已安装XCode
+    - 控制台执行 `react-native run-ios`
+  - 安卓环境：
+    - 打开android-studio => 打开已有工程 => 选择`<工程文件夹>/android`目录
+    - 点击android-studio右上方 同步(sync)按钮
+    - (首次运行需要)根据提示，需要额外安装sdk-24, sdk-25, sdk-26的版本库(如果之前没有装过)
+    - 打开安卓模拟器(android-studio右上角绿色三角形符号)
+    - 控制台执行 `react-native run-android`
 6. 控制台日志输出：
   - iOS环境： `react-native log-ios`
   - 安卓环境： `react-native log-android`
