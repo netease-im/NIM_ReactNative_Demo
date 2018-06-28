@@ -13,10 +13,11 @@
   - iOS环境：
     - iOS需要实现保证已安装XCode
     - 控制台执行 `react-native run-ios`
+    - 如果ios运行的时候报server连接不到localhost:8081的错，需要配置一下hosts，添加地址配置： 127.0.0.1 localhost
   - 安卓环境：
     - 打开android-studio => 打开已有工程 => 选择`<工程文件夹>/android`目录
     - 点击android-studio右上方 同步(sync)按钮
-    - (首次运行需要)根据提示，需要额外安装sdk-24, sdk-25, sdk-26的版本库(如果之前没有装过)
+    - (首次运行需要)根据提示，可能需要额外安装sdk-24, sdk-25, sdk-26, sdk-27的版本库(如果之前没有装过)，具体可以参照步骤1中android-studio有关sdk-tools的安装说明
     - 打开安卓模拟器(android-studio右上角绿色三角形符号)
     - 控制台执行 `react-native run-android`
 ![](https://yx-web.nos-hz.163yun.com/demo/reactnative/android-studio.png)
