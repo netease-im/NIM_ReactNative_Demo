@@ -51,12 +51,12 @@ export default class Page extends Component {
     }
     return this.state.users.map((item) => {
       const {
-        avatar, nick, account, idServer,
+        avatar, nick, account,
       } = item;
       return (
         <ListItem
           roundAvatar
-          key={idServer}
+          key={account}
           leftAvatar={{ source: { uri: avatar || configs.defaultUserIcon } }}
           chevron
           chevronColor={baseBlueColor}

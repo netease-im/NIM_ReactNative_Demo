@@ -24,7 +24,7 @@ export const globalStyle = {
   avatar: {
     width: 9 * RVW,
     height: 9 * RVW,
-    borderRadius: 9 * RVW / 2,
+    borderRadius: (9 * RVW) / 2,
   },
   listItemRight: {
     width: 60 * RVW,
@@ -190,6 +190,12 @@ export const chatStyle = {
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  icon: {
+    marginTop: 2 * RVW,
+    marginRight: 10,
+    width: 5 * RFT,
+    height: 5 * RFT,
+  },
   content: {
     padding: 10,
     borderRadius: 6,
@@ -202,7 +208,7 @@ export const chatStyle = {
   },
   contentRight: {
     marginRight: 10,
-    backgroundColor: '#e5f0ff',
+    backgroundColor: '#fff',
   },
   text: {
     fontSize: 3.2 * RFT,
@@ -248,9 +254,10 @@ export const emojiStyle = {
     borderLeftWidth: 0,
   },
   emojiWrapper: {
-    flexDirection: 'row',
+    height: 50 * RVW,
+    flexDirection: 'column',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   emoji: {
     justifyContent: 'center',
@@ -258,7 +265,7 @@ export const emojiStyle = {
     alignContent: 'center',
     width: 10 * RVW,
     height: 10 * RVW,
-    borderWidth: 2 * RPX,
+    borderWidth: 1 * RPX,
     borderColor: '#ccc',
     borderLeftWidth: 0,
   },
@@ -268,7 +275,7 @@ export const emojiStyle = {
     alignContent: 'center',
     width: 12.5 * RVW,
     height: 12.5 * RVW,
-    borderWidth: 2 * RPX,
+    borderWidth: 1 * RPX,
     borderColor: '#ccc',
     borderLeftWidth: 0,
   },

@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, TouchableOpacity, KeyboardAvoidingView, InteractionManager } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
+// import RNFS from 'react-native-fs';
 import { chatStyle } from '../themes';
 import ChatEmoji from './chatEmoji';
 import { RVW, RFT } from '../common';
-import MD5 from '../util/md5';
+// import MD5 from '../util/md5';
+import uuid from '../util/uuid';
 
 export const ChatItem = (props) => {
   const typeMap = {
@@ -60,13 +61,15 @@ export class ChatBox extends React.Component {
     };
     this.props.action.sendTextMsg(options);
     // 触发value diff
-    setTimeout(() => {
+    InteractionManager.runAfterInteractions(() => {
+    // clearTimeout(this.scrollTimer);
       this.inputText._lastNativeText = '';
       this.setState({
         msgText: '',
       });
       this.scrollToEnd();
-    }, 0);
+    // }, 300);
+    });
   }
   sendEmojiMsg = (item) => {
     const options = {
@@ -78,6 +81,7 @@ export class ChatBox extends React.Component {
       to: this.props.options.toAccount,
     };
     this.props.action.sendCustomMsg(options);
+    this.scrollToEnd();
   }
   sendPlayMsg = () => {
     this.showExtra();
@@ -92,6 +96,7 @@ export class ChatBox extends React.Component {
       to: this.props.options.toAccount,
     };
     this.props.action.sendCustomMsg(options);
+    this.scrollToEnd();
   }
   sendVoiceMsg = () => {
     this.props.toast.show('Demo暂不支持发送语音消息');
@@ -120,8 +125,6 @@ export class ChatBox extends React.Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const fileData = `data:${response.type};base64,${response.data}`;
-        const filePath = response.uri.replace(/^file:\/\//, '');
         const fileOptions = {
           scene: this.props.options.scene,
           to: this.props.options.toAccount,
@@ -129,15 +132,20 @@ export class ChatBox extends React.Component {
           width: response.width,
           height: response.height,
           size: 1, // stat.size,
-          md5: MD5(fileData),
+          md5: uuid(), // MD5(fileData),
+          // pendingUrl: `data:${response.type};base64,${response.data}`,
+          callback: () => {
+            this.scrollToEnd();
+          },
         };
-        RNFS.stat(filePath).then((stat) => {
-          fileOptions.size = stat.size;
-        }).catch((error) => {
-          console.log(filePath, error);
-        }).finally(() => {
-          this.props.action.sendImageMsg(fileOptions);
-        });
+        this.props.action.sendImageMsg(fileOptions);
+        // RNFS.stat(filePath).then((stat) => {
+        //   fileOptions.size = stat.size;
+        // }).catch((error) => {
+        //   console.log(filePath, error);
+        // }).finally(() => {
+        //   this.props.action.sendImageMsg(fileOptions);
+        // });
       }
     });
   }
@@ -162,10 +170,10 @@ export class ChatBox extends React.Component {
 
     });
   }
-  showEmoji = () => {
+  showEmoji = (isEmoji = false) => {
     this.inputText.blur();
     this.setState({
-      isEmojiShown: !this.state.isEmojiShown,
+      isEmojiShown: isEmoji,
       isExtraShown: false,
       msgText: this.inputText._lastNativeText,
     });
@@ -183,7 +191,9 @@ export class ChatBox extends React.Component {
     if (this.props.chatListRef) {
       clearTimeout(this.scrollTimer);
       this.scrollTimer = setTimeout(() => {
-        this.props.chatListRef.getNode().scrollToEnd();
+        InteractionManager.runAfterInteractions(() => {
+          this.props.chatListRef.getNode().scrollToEnd();
+        });
       }, 500);
     }
   }
@@ -197,13 +207,15 @@ export class ChatBox extends React.Component {
             // this.setState({
             //   msgText: `${this.state.msgText}${item.key}`,
             // });
+            this.showEmoji(true);
           } else if (item.type === 'pinup') {
             this.sendEmojiMsg({
               catalog: item.name,
               chartlet: item.key,
             });
+            this.inputText.blur();
+            this.showEmoji();
           }
-          this.showEmoji();
         }}
         />
       );

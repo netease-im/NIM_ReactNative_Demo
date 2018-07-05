@@ -2,7 +2,8 @@ import React from 'react';
 import { View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { chatStyle, emojiStyle } from '../themes';
 import { RVW } from '../common';
-import emojiObj from '../util/emoji';
+// import emojiObj from '../util/emoji';
+import emojiObj from '../res/emoji';
 
 function genEmojiList(type, emojiList) {
   const result = {};
@@ -42,12 +43,16 @@ export default class ChatEmoji extends React.Component {
       currType: 'emoji',
       currAlbum: 'emoji',
     };
+    this.emojiScrollView = null;
   }
   selectAlbum = (item) => {
     this.setState({
       currType: item.type,
       currAlbum: item.name,
     });
+    if (this.emojiScrollView) {
+      this.emojiScrollView.scrollTo({ x: 0 });
+    }
   }
   selectEmoji = (item) => {
     this.props.onSelectEmoji({
@@ -59,7 +64,7 @@ export default class ChatEmoji extends React.Component {
   renderEmoji = () => {
     const emojis = this.emoji[this.state.currAlbum];
     return (
-      <View style={emojiStyle.emojiWrapper} contentContainerStyle={{ justifyContent: 'center' }}>
+      <View style={emojiStyle.emojiWrapper}>
         {
           emojis.list.map(item => (
             <TouchableOpacity
@@ -67,7 +72,7 @@ export default class ChatEmoji extends React.Component {
               style={emojiStyle.emoji}
               onPress={() => { this.selectEmoji({ key: item.key }); }}
             >
-              <Image source={{ uri: item.img }} key={item.key} style={{ width: 6 * RVW, height: 6 * RVW }} />
+              <Image source={item.img} key={item.key} style={{ width: 6 * RVW, height: 6 * RVW }} />
             </TouchableOpacity>
           ))
         }
@@ -77,7 +82,7 @@ export default class ChatEmoji extends React.Component {
   renderPinup = () => {
     const pinups = this.pinup[this.state.currAlbum];
     return (
-      <View style={emojiStyle.emojiWrapper} contentContainerStyle={{ justifyContent: 'center' }}>
+      <View style={emojiStyle.emojiWrapper}>
         {
           pinups.list.map(item => (
             <TouchableOpacity
@@ -85,7 +90,7 @@ export default class ChatEmoji extends React.Component {
               style={emojiStyle.pinup}
               onPress={() => { this.selectEmoji({ key: item.key }); }}
             >
-              <Image key={item.key} source={{ uri: item.img }} style={{ width: 10 * RVW, height: 10 * RVW }} />
+              <Image key={item.key} source={item.img} style={{ width: 10 * RVW, height: 10 * RVW }} />
             </TouchableOpacity>
           ))
         }
@@ -95,7 +100,10 @@ export default class ChatEmoji extends React.Component {
   render() {
     return (
       <View style={[chatStyle.chatItemWraper, { paddingVertical: 0 }]}>
-        <ScrollView style={{ height: 42 * RVW }}>
+        <ScrollView
+          horizontal
+          ref={(scrollView) => { this.emojiScrollView = scrollView; }}
+        >
           { this.state.currType === 'emoji' ? this.renderEmoji() : this.renderPinup()}
         </ScrollView>
         <View style={[chatStyle.chatItemRow, { backgroundColor: '#fff', justifyContent: 'flex-start' }]}>
@@ -104,7 +112,7 @@ export default class ChatEmoji extends React.Component {
               const emoji = this.emoji[name].list[0];
               return (
                 <TouchableOpacity key={name} style={[emojiStyle.album, { backgroundColor: (this.state.currAlbum === name ? '#f0f0f0' : '#fff') }]} onPress={() => { this.selectAlbum({ type: 'emoji', name }); }}>
-                  <Image source={{ uri: emoji.img }} style={{ width: 6 * RVW, height: 6 * RVW }} />
+                  <Image source={emoji.img} style={{ width: 6 * RVW, height: 6 * RVW }} />
                 </TouchableOpacity>
               );
             })
@@ -114,7 +122,7 @@ export default class ChatEmoji extends React.Component {
               const pinup = this.pinup[name].list[0];
               return (
                 <TouchableOpacity key={name} style={[emojiStyle.album, { backgroundColor: (this.state.currAlbum === name ? '#f0f0f0' : '#fff') }]} onPress={() => { this.selectAlbum({ type: 'pinup', name }); }}>
-                  <Image source={{ uri: pinup.img }} style={{ width: 6 * RVW, height: 6 * RVW }} />
+                  <Image source={pinup.img} style={{ width: 6 * RVW, height: 6 * RVW }} />
                 </TouchableOpacity>
               );
             })

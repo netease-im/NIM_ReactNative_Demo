@@ -52,7 +52,7 @@ export default class Page extends React.Component {
     });
   }
   login = () => {
-    NetInfo.isConnected.fetch().done((isConnected) => {
+    NetInfo.isConnected.fetch().then((isConnected) => {
       if (isConnected) {
         this.doLogin();
       } else {

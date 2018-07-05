@@ -49,7 +49,6 @@ function saveMsgs() {
 }
 
 function onSysMsgs(sysmsgs) {
-  console.log(sysmsgs);
   if (!Array.isArray(sysmsgs)) {
     sysmsgs = [sysmsgs];
   }
@@ -119,7 +118,7 @@ class Actions {
       ondisconnect(event) {
         AsyncStorage.removeItem('isLogin');
         let tipMsg = util.parseDisconnectMsg(event);
-        NetInfo.isConnected.fetch().done((isConnected) => {
+        NetInfo.isConnected.fetch().then((isConnected) => {
           if (!isConnected) {
             tipMsg = '断网情况退出';
           }

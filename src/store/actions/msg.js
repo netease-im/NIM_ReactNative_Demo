@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, set } from 'mobx';
 import { Alert } from 'react-native';
 import constObj from '../constant';
 import nimStore from '../stores/nim';
@@ -7,8 +7,33 @@ import uuid from '../../util/uuid';
 
 class Actions {
   @observable nimStore
+
+  generateFakeMsg = (options = {}) => {
+    const {
+      scene, to, type, pendingUrl,
+    } = options;
+    const msg = {
+      sessionId: `${scene}-${to}`,
+      scene,
+      from: nimStore.userID,
+      to,
+      flow: 'out',
+      type,
+      file: {
+        pendingUrl,
+        w: options.width,
+        h: options.height,
+      },
+      idClientFake: uuid(),
+      status: 'sending',
+      time: (new Date()).getTime(),
+    };
+    return msg;
+  }
+
+
   @action
-  appendMsg = (msg) => {
+  appendSessionMsg = (msg) => {
     const { sessionId } = msg;
     const tempMsgs = [];
     // if (nimStore.msgsMap[sessionId]) {
@@ -22,12 +47,14 @@ class Actions {
           tempMsgs.push({
             type: 'timeTag',
             text: util.formatDate(msg.time, false),
+            key: uuid(),
           });
         }
       } else {
         tempMsgs.push({
           type: 'timeTag',
           text: util.formatDate(msg.time, false),
+          key: uuid(),
         });
       }
       tempMsgs.push(msg);
@@ -35,24 +62,80 @@ class Actions {
     }
   }
 
+  // 替换消息列表消息，如消息撤回
+  @action replaceSessionMsg = (obj) => {
+    const {
+      sessionId, idClient, idClientFake, msg,
+    } = obj;
+    if (sessionId === nimStore.currentSessionId) {
+      const tempMsgs = nimStore.currentSessionMsgs || [];
+      if (tempMsgs.length > 0) {
+        const lastMsgIndex = tempMsgs.length - 1;
+        for (let i = lastMsgIndex; i >= 0; i -= 1) {
+          const currMsg = tempMsgs[i];
+          if (idClientFake && idClientFake === currMsg.idClientFake) {
+            tempMsgs.splice(i, 1, msg);
+            break;
+          } else if (idClient && idClient === currMsg.idClient) {
+            tempMsgs.splice(i, 1, msg);
+            break;
+          }
+        }
+        nimStore.currentSessionMsgs = util.simpleClone(tempMsgs);
+      }
+    }
+  }
+
+  @action
+  updateSessionMsg = (msg) => {
+    const { sessionId, idClient, idClientFake } = msg;
+    if (sessionId === nimStore.currentSessionId) {
+      const msgLen = nimStore.currentSessionMsgs.length;
+      if (msgLen > 0) {
+        for (let i = msgLen - 1; i >= 0; i -= 1) {
+          if (idClientFake) {
+            if (nimStore.currentSessionMsgs[i].idClientFake === idClientFake) {
+              set(nimStore.currentSessionMsgs[i], msg);
+              nimStore.currentSessionMsgs = nimStore.currentSessionMsgs.concat([]);
+              break;
+            }
+          } else if (idClient) {
+            if (nimStore.currentSessionMsgs[i].idClient === idClient) {
+              set(nimStore.currentSessionMsgs[i], msg);
+              nimStore.currentSessionMsgs = nimStore.currentSessionMsgs.concat([]);
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
   @action
   sendTextMsg = (options) => {
     if (constObj.nim) {
-      const { scene, to, text } = options;
-      constObj.nim.sendText({
+      const {
+        scene, to, text,
+      } = options;
+      const msg = constObj.nim.sendText({
         scene,
         to,
         text,
-        done: (error, msg) => {
+        done: (error, newMsg) => {
           if (error) {
             Alert.alert('提示', error.message, [
               { text: '确认' },
             ]);
-            return;
+            newMsg.status = 'fail';
           }
-          this.appendMsg(msg);
+          this.replaceSessionMsg({
+            sessionId: newMsg.sessionId,
+            idClient: newMsg.idClient,
+            msg: newMsg,
+          });
         },
       });
+      this.appendSessionMsg(msg);
     }
   };
 
@@ -60,26 +143,38 @@ class Actions {
   sendCustomMsg = (options) => {
     if (constObj.nim) {
       const { scene, to, content } = options;
-      constObj.nim.sendCustomMsg({
+      const msg = constObj.nim.sendCustomMsg({
         scene,
         to,
         content: JSON.stringify(content),
-        done: (error, msg) => {
+        done: (error, newMsg) => {
           if (error) {
             Alert.alert('提示', error.message, [
               { text: '确认' },
             ]);
-            return;
+            newMsg.status = 'fail';
           }
-          this.appendMsg(msg);
+          this.replaceSessionMsg({
+            sessionId: newMsg.sessionId,
+            idClient: newMsg.idClient,
+            msg: newMsg,
+          });
         },
       });
+      this.appendSessionMsg(msg);
     }
   };
 
   @action
   sendImageMsg = (options) => {
     if (constObj.nim) {
+      // 本地的图片先显示了，并转菊花
+      options.type = 'image';
+      const prevMsg = this.generateFakeMsg(options);
+      this.appendSessionMsg(prevMsg);
+      if (options.callback instanceof Function) {
+        options.callback();
+      }
       constObj.nim.previewFile({
         type: 'image',
         filePath: options.filePath,
@@ -89,25 +184,47 @@ class Actions {
           console.log(`上传进度: ${obj.percentage}`);
           console.log(`上传进度文本: ${obj.percentageText}`);
         },
-        done: (error, file) => {
-          file.w = options.width;
-          file.h = options.height;
-          file.md5 = options.md5;
-          file.size = options.size;
+        done: (error, { name, url, ext }) => {
+          const file = {
+            name,
+            url,
+            w: options.width,
+            h: options.height,
+            md5: options.md5,
+            size: options.size,
+            ext,
+          };
           const { scene, to } = options;
           if (!error) {
-            constObj.nim.sendFile({
+            const msg = constObj.nim.sendFile({
               type: 'image',
               scene,
               to,
               file,
-              done: (err, msg) => {
+              done: (err, newMsg) => {
                 if (err) {
-                  return;
+                  newMsg.status = 'fail';
                 }
-                this.appendMsg(msg);
+                // newMsg.file.pendingUrl = prevMsg.file.pendingUrl;
+                this.replaceSessionMsg({
+                  sessionId: newMsg.sessionId,
+                  idClient: newMsg.idClient,
+                  msg: newMsg,
+                });
               },
             });
+            // 替换本地假消息
+            const tempMsg = util.simpleClone(msg);
+            // tempMsg.file.pendingUrl = prevMsg.file.pendingUrl;
+            this.replaceSessionMsg({
+              sessionId: msg.sessionId,
+              // idClient: msg.idClient,
+              idClientFake: prevMsg.idClientFake,
+              msg: tempMsg,
+            });
+            if (options.callback instanceof Function) {
+              options.callback();
+            }
           }
         },
       });
@@ -161,7 +278,7 @@ class Actions {
         }
         const idClient = msg.deletedIdClient || msg.idClient;
         const { sessionId } = msg;
-        this.replaceMsg({
+        this.replaceSessionMsg({
           sessionId,
           idClient,
           msg: tipMsg,
@@ -180,25 +297,6 @@ class Actions {
         this.onBackoutMsg(error, msg);
       },
     });
-  }
-
-  // 替换消息列表消息，如消息撤回
-  @action replaceMsg = (obj) => {
-    const { sessionId, idClient, msg } = obj;
-    if (sessionId === nimStore.currentSessionId) {
-      const tempMsgs = nimStore.currentSessionMsgs || [];
-      if (tempMsgs.length > 0) {
-        const lastMsgIndex = tempMsgs.length - 1;
-        for (let i = lastMsgIndex; i >= 0; i -= 1) {
-          const currMsg = tempMsgs[i];
-          if (idClient === currMsg.idClient) {
-            tempMsgs.splice(i, 1, msg);
-            break;
-          }
-        }
-        nimStore.currentSessionMsgs = util.simpleClone(tempMsgs);
-      }
-    }
   }
 
   @action getLocalMsgs =(sessionId, options = {}) => {

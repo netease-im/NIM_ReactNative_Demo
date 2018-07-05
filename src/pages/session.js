@@ -20,7 +20,7 @@ export default class Page extends Component {
     this.sessionItems = {};
   }
   componentWillMount() {
-    NetInfo.isConnected.fetch().done((isConnected) => {
+    NetInfo.isConnected.fetch().then((isConnected) => {
       if (isConnected) {
         this.initLogin();
       } else {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, FlatList, Text, View, TouchableOpacity } from 'react-native';
+import { Animated, FlatList, Text, View, TouchableOpacity, InteractionManager } from 'react-native';
 import { Icon, Header } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import { inject, observer } from 'mobx-react/native';
@@ -33,15 +33,16 @@ export default class Page extends Component {
   }
   componentDidMount() {
     clearTimeout(this.scrollTimer);
-    this.scrollTimer = setTimeout(() => {
+    // this.scrollTimer = setTimeout(() => {
+    InteractionManager.runAfterInteractions(() => {
       this.scrollToEnd();
-    }, 200);
+    });
+    // }, 200);
   }
   componentWillUnmount() {
     clearTimeout(this.scrollTimer);
   }
-  scrollToEnd = (options = {}, animated = false) => {
-    const { width, height } = options;
+  scrollToEnd = (animated = false) => {
     if (this.notScroll) {
       return;
     }
@@ -66,7 +67,9 @@ export default class Page extends Component {
         this.notScroll = true;
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(() => {
+        // InteractionManager.runAfterInteractions(() => {
           this.notScroll = false;
+        // });
         }, 1000);
         this.setState({
           refreshing: false,
@@ -128,23 +131,21 @@ export default class Page extends Component {
   renderItem = ((item) => {
     const msg = item.item;
     if (msg.type === 'tip') {
-      return <Text key={msg.tip} style={chatStyle.tip}>{msg.tip}</Text>;
+      return <Text style={chatStyle.tip}>{msg.tip}</Text>;
     } else if (msg.flow === 'in') {
       return (<ChatLeft
-        key={msg.idClient}
         msg={msg}
         nimStore={this.props.nimStore}
         navigation={this.props.navigation}
       />);
     } else if (msg.flow === 'out') {
       return (<ChatRight
-        key={msg.idClient}
         msg={msg}
         msgAction={this.props.msgAction}
         nimStore={this.props.nimStore}
       />);
     } else if (msg.type === 'timeTag') {
-      return <Text key={msg.text} style={chatStyle.timetag}>----  {msg.text}  ----</Text>;
+      return <Text style={chatStyle.timetag}>----  {msg.text}  ----</Text>;
     }
     return null;
   })
@@ -168,10 +169,10 @@ export default class Page extends Component {
         <AnimatedFlatList
           style={{ marginVertical: 20 }}
           data={this.props.nimStore.currentSessionMsgs}
-          keyExtractor={item => (item.idClient || item.key || item.text)}
+          keyExtractor={item => (item.idClient || item.idClientFake || item.key || item.text)}
           renderItem={this.renderItem}
           ref={(ref) => { this.chatListRef = ref; }}
-          // onContentSizeChange={(width, height) => this.scrollToEnd({ width, height })}
+          onContentSizeChange={() => this.scrollToEnd()}
           onRefresh={this.loadMore}
           refreshing={this.state.refreshing}
         />

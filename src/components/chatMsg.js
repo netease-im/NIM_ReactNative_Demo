@@ -5,9 +5,12 @@ import { Icon } from 'react-native-elements';
 import { chatStyle } from '../themes';
 import { RVW, RFT } from '../common';
 import util from '../util';
-import emojiObj from '../util/emoji';
+// import emojiObj from '../util/emoji';
+import emojiObj from '../res/emoji';
+import playObj from '../res/play';
 import configs from '../configs';
 import constObj from '../store/constant';
+import res from '../res';
 
 const AvatarItem = (props) => {
   let { avatar } = props;
@@ -35,7 +38,6 @@ const AvatarItem = (props) => {
 const ChatContent = (props) => {
   const { msg = {} } = props;
   const { emoji } = emojiObj.emojiList;
-  const { resourceUrl } = configs;
   if (msg.type === 'text') {
     let showText = msg.text;
     const showTextArray = [];
@@ -66,7 +68,7 @@ const ChatContent = (props) => {
             if (emoji[item]) {
               return (<Image
                 key={id}
-                source={{ uri: emoji[item].img }}
+                source={emoji[item].img}
                 style={{
                   width: 5 * RFT, height: 5 * RFT,
                 }}
@@ -82,14 +84,15 @@ const ChatContent = (props) => {
     // type 1 为猜拳消息
     if (content.type === 1) {
       const { data } = content;
-      const playImg = `${resourceUrl}/im/play-${data.value}.png`;
-      return (<Image source={{ uri: playImg }} style={chatStyle.play} />);
+      const playImg = playObj[`play${data.value}`];
+      return (<Image source={playImg} style={chatStyle.play} />);
       // type 3 为贴图表情
     } else if (content.type === 3) {
       const { data } = content;
       if (emojiObj.pinupList[data.catalog]) {
         const emojiCnt = emojiObj.pinupList[data.catalog][data.chartlet];
-        return (<Image source={{ uri: emojiCnt.img }} style={chatStyle.emoji} />);
+        // return (<Image source={{ uri: emojiCnt.img }} style={chatStyle.emoji} />);
+        return (<Image source={emojiCnt.img} style={chatStyle.emoji} />);
       }
       return (
         <Text style={chatStyle.text}>[未知贴图表情]</Text>);
@@ -100,15 +103,23 @@ const ChatContent = (props) => {
     const { file } = msg;
     const width = 50 * RVW;
     const height = file.h > 0 ? ((width / file.w) * file.h) : 50 * RVW;
-    const viewUrl = constObj.nim.viewImageSync({
-      url: file.url, // 必填
-      quality: 80, // 图片质量 0 - 100 可选填
-      thumbnail: { // 生成缩略图， 可选填
-        width: 10 * RVW,
-        mode: 'cover',
-      },
-    });
-    return (<Image source={{ uri: viewUrl }} style={{ width, height }} />);
+    let viewUrl = res.loadingImg;
+    if (file.pendingUrl) {
+      viewUrl = { uri: file.pendingUrl };
+    } else if (file.url) {
+      viewUrl = { uri: file.url };
+      viewUrl = {
+        uri: constObj.nim.viewImageSync({
+          url: file.url, // 必填
+          quality: 75, // 图片质量 0 - 100 可选填
+          thumbnail: { // 生成缩略图， 可选填
+            width: Math.min(file.w, 20 * RVW),
+            mode: 'cover',
+          },
+        }),
+      };
+    }
+    return (<Image source={viewUrl} style={{ width, height }} />);
   }
   const showMsg = util.mapMsgType(msg);
   return (<Text style={chatStyle.text}>[{showMsg}]</Text>);
@@ -154,7 +165,7 @@ export const ChatLeft = (props) => {
         />
       </TouchableOpacity>
       <View style={[chatStyle.content, chatStyle.contentLeft]}>
-        <ChatContent key={msg.idClient} msg={msg} />
+        <ChatContent msg={msg} />
       </View>
     </View>
   );
@@ -172,13 +183,19 @@ export const ChatRight = (props) => {
           type="font-awesome"
           size={5 * RFT}
           color="#f00"
-          iconStyle={{ marginTop: 2 * RVW, marginRight: 10 }}
+          iconStyle={chatStyle.icon}
         />
+        :
+        null
+      }
+      { msg.status === 'sending' ?
+        <Image source={res.loadingMsg} style={chatStyle.icon} />
         :
         null
       }
       <TouchableOpacity
         style={[chatStyle.content, chatStyle.contentRight]}
+        activeOpacity={1}
         onLongPress={() => {
           if (props.msgAction) {
             const currentTime = (new Date()).getTime();
@@ -192,7 +209,7 @@ export const ChatRight = (props) => {
           }
         }}
       >
-        <ChatContent key={msg.idClient} msg={msg} />
+        <ChatContent msg={msg} />
       </TouchableOpacity>
       <AvatarItem
         avatar={avatar}

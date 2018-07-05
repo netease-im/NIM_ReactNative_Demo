@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Header } from 'react-native-elements';
 import { inject } from 'mobx-react/native';
-import { Animated, FlatList, View, Text } from 'react-native';
+import { Animated, FlatList, View, Text, InteractionManager } from 'react-native';
 import { headerStyle, globalStyle, chatStyle } from '../themes';
 import { ChatLeft, ChatRight } from '../components/chatMsg';
 import GoBack from '../components/goback';
@@ -37,16 +37,16 @@ export default class Page extends Component {
         this.setState({
           historyMsgs: this.sortMsgs(msgs),
         });
+        InteractionManager.runAfterInteractions(() => {
+          this.scrollToEnd();
+        });
       },
     });
   }
-  componentWillUnmount() {
-    clearTimeout(this.scrollTimer);
-  }
   scrollToEnd = () => {
-    if (this.chatListRef) {
-      this.chatListRef.getNode().scrollTo({ y: 100 * RVH });
-    }
+    // if (this.chatListRef) {
+    //   this.chatListRef.getNode().scrollTo({ x: 0, y: 100 * RVH });
+    // }
   }
   loadMore = () => {
     let endTime = this.state.historyMsgs[0].time;
@@ -74,6 +74,9 @@ export default class Page extends Component {
         });
         this.setState({
           historyMsgs: currHistoryMsgs,
+        });
+        InteractionManager.runAfterInteractions(() => {
+          this.scrollToEnd();
         });
       },
     });
