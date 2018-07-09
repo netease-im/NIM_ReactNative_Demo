@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
-// import Video from 'react-native-video';
+import Sound from 'react-native-sound';
 import { chatStyle } from '../themes';
 import { RVW, RFT } from '../common';
 import util from '../util';
@@ -11,6 +11,8 @@ import playObj from '../res/play';
 import configs from '../configs';
 import constObj from '../store/constant';
 import res from '../res';
+
+// const soundFile = 'https://yx-web.nos-hz.163yun.com/demo%2Freactnative%2Ftest.mp3'; // require('./test.mp3');
 
 const AvatarItem = (props) => {
   let { avatar } = props;
@@ -120,6 +122,53 @@ const ChatContent = (props) => {
       };
     }
     return (<Image source={viewUrl} style={{ width, height }} />);
+  } else if (msg.type === 'audio') {
+    let duration = 1;
+    if (msg.file && msg.file.dur) {
+      duration = Math.floor(msg.file.dur / 1000);
+    }
+    const soundUrl = msg.file.url; // msg.file.ext === 'mp3' ? msg.file.url : msg.file.mp3Url;
+    // console.log(111111111111111, soundUrl);
+    // console.log(222222222222222, msg.file.mp3Url);
+    return (
+      <TouchableOpacity
+        style={{ flexDirection: 'row' }}
+        onPress={() => {
+          if (constObj.sound) {
+            constObj.sound.stop(() => {
+              constObj.sound.release();
+              constObj.sound = null;
+            });
+          } else {
+            constObj.sound = new Sound(soundUrl, null, (error) => {
+              if (error) {
+                Alert.alert('网络不通');
+                constObj.sound.release();
+                constObj.sound = null;
+                return;
+              }
+              constObj.sound.play((success) => {
+                console.log(success, constObj.sound);
+                if (!success) {
+                  Alert.alert('文件已损坏');
+                  return;
+                }
+                constObj.sound.release();
+                constObj.sound = null;
+              });
+            });
+          }
+        }}
+      >
+        <Icon
+          type="material"
+          name="record-voice-over"
+          color="#666"
+          size={3.5 * RFT}
+        />
+        <Text>{`  ${duration}"`}</Text>
+      </TouchableOpacity>
+    );
   }
   const showMsg = util.mapMsgType(msg);
   return (<Text style={chatStyle.text}>[{showMsg}]</Text>);

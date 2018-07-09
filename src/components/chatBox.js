@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, KeyboardAvoidingView, InteractionManager } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
-// import RNFS from 'react-native-fs';
+import ChatAudio from './chatAudio';
 import { chatStyle } from '../themes';
 import ChatEmoji from './chatEmoji';
 import { RVW, RFT } from '../common';
-// import MD5 from '../util/md5';
 import uuid from '../util/uuid';
 
 export const ChatItem = (props) => {
@@ -24,7 +23,6 @@ export const ChatItem = (props) => {
   );
 };
 
-
 export class ChatBox extends React.Component {
   static defaultProps = {
     options: {
@@ -41,10 +39,40 @@ export class ChatBox extends React.Component {
       isExtraShown: false,
       isEmojiShown: false,
     };
-    this.scrollTimer = null;
+    this._scrollTimer = null;
   }
   componentWillUnmount() {
-    clearTimeout(this.scrollTimer);
+    clearTimeout(this._scrollTimer);
+  }
+  showVoice = () => {
+    this.setState({
+      isTextMsg: false,
+      isExtraShown: false,
+      isEmojiShown: false,
+    });
+  }
+  hideVoice = () => {
+    this.setState({
+      isTextMsg: true,
+
+    });
+  }
+  showEmoji = (isEmoji = false) => {
+    this.inputText.blur();
+    this.setState({
+      isEmojiShown: isEmoji,
+      isExtraShown: false,
+      msgText: this.inputText._lastNativeText,
+    });
+    this.scrollToEnd();
+  }
+  showExtra = () => {
+    this.inputText.blur();
+    this.setState({
+      isExtraShown: !this.state.isExtraShown,
+      isEmojiShown: false,
+    });
+    this.scrollToEnd();
   }
   sendTextMsg = (event) => {
     const { text } = event.nativeEvent;
@@ -62,7 +90,7 @@ export class ChatBox extends React.Component {
     this.props.action.sendTextMsg(options);
     // 触发value diff
     InteractionManager.runAfterInteractions(() => {
-    // clearTimeout(this.scrollTimer);
+    // clearTimeout(this._scrollTimer);
       this.inputText._lastNativeText = '';
       this.setState({
         msgText: '',
@@ -98,8 +126,19 @@ export class ChatBox extends React.Component {
     this.props.action.sendCustomMsg(options);
     this.scrollToEnd();
   }
-  sendVoiceMsg = () => {
-    this.props.toast.show('Demo暂不支持发送语音消息');
+  sendVoiceMsg = (filePath, duration) => {
+    const fileOptions = {
+      scene: this.props.options.scene,
+      to: this.props.options.toAccount,
+      filePath,
+      size: 1, // stat.size,
+      md5: uuid(),
+      dur: Math.round(duration * 1000),
+      callback: () => {
+        this.scrollToEnd();
+      },
+    };
+    this.props.action.sendAudioMsg(fileOptions);
   }
   sendImgMsg = () => {
     this.showExtra();
@@ -157,40 +196,10 @@ export class ChatBox extends React.Component {
     this.showExtra();
     this.props.toast.show('Demo暂不支持发送文件消息');
   }
-  showVoice = () => {
-    this.setState({
-      isTextMsg: false,
-      isExtraShown: false,
-      isEmojiShown: false,
-    });
-  }
-  hideVoice = () => {
-    this.setState({
-      isTextMsg: true,
-
-    });
-  }
-  showEmoji = (isEmoji = false) => {
-    this.inputText.blur();
-    this.setState({
-      isEmojiShown: isEmoji,
-      isExtraShown: false,
-      msgText: this.inputText._lastNativeText,
-    });
-    this.scrollToEnd();
-  }
-  showExtra = () => {
-    this.inputText.blur();
-    this.setState({
-      isExtraShown: !this.state.isExtraShown,
-      isEmojiShown: false,
-    });
-    this.scrollToEnd();
-  }
   scrollToEnd = () => {
     if (this.props.chatListRef) {
-      clearTimeout(this.scrollTimer);
-      this.scrollTimer = setTimeout(() => {
+      clearTimeout(this._scrollTimer);
+      this._scrollTimer = setTimeout(() => {
         InteractionManager.runAfterInteractions(() => {
           this.props.chatListRef.getNode().scrollToEnd();
         });
@@ -306,11 +315,8 @@ export class ChatBox extends React.Component {
               style={chatStyle.iconSmall}
               onPress={this.hideVoice}
             />
-            <Button
-              buttonStyle={chatStyle.chatBtn}
-              title="长按发送语音消息"
-              titleStyle={{ color: '#999' }}
-              onLongPress={this.sendVoiceMsg}
+            <ChatAudio
+              sendAudio={this.sendVoiceMsg}
             />
           </View>
         }

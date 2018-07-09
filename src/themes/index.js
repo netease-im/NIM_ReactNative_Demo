@@ -15,10 +15,10 @@ export const globalStyle = {
     alignContent: 'center',
   },
   avatarWrapper: {
-    width: 9 * RVW,
-    height: 9 * RVW,
-    borderRadius: 9 * RVW,
-    borderWidth: 2 * RPX,
+    width: (9 * RVW) + 1,
+    height: (9 * RVW) + 1,
+    borderRadius: (9 * RVW) / 2,
+    borderWidth: 1,
     borderColor: '#ccc',
   },
   avatar: {
@@ -148,6 +148,11 @@ export const chatStyle = {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
+  },
+  chatBtnText: {
+    textAlign: 'center',
+    lineHeight: 9 * RFT,
+    fontSize: 3 * RFT,
   },
   chatItemWraper: {
     backgroundColor: '#f0f0f0',

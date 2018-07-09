@@ -231,6 +231,56 @@ class Actions {
     }
   };
 
+  @action
+  sendAudioMsg = (options) => {
+    if (constObj.nim) {
+      constObj.nim.previewFile({
+        type: 'audio',
+        filePath: options.filePath,
+        uploadprogress(obj) {
+          console.log(`文件总大小: ${obj.total}bytes`);
+          console.log(`已经上传的大小: ${obj.loaded}bytes`);
+          console.log(`上传进度: ${obj.percentage}`);
+          console.log(`上传进度文本: ${obj.percentageText}`);
+        },
+        done: (error, { name, url, ext }) => {
+          const file = {
+            name,
+            url,
+            dur: options.dur,
+            md5: options.md5,
+            size: options.size,
+            ext,
+          };
+          const { scene, to } = options;
+          if (!error) {
+            const msg = constObj.nim.sendFile({
+              type: 'audio',
+              scene,
+              to,
+              file,
+              done: (err, newMsg) => {
+                if (err) {
+                  newMsg.status = 'fail';
+                }
+                // newMsg.file.pendingUrl = prevMsg.file.pendingUrl;
+                this.replaceSessionMsg({
+                  sessionId: newMsg.sessionId,
+                  idClient: newMsg.idClient,
+                  msg: newMsg,
+                });
+              },
+            });
+            this.appendSessionMsg(msg);
+            if (options.callback instanceof Function) {
+              options.callback();
+            }
+          }
+        },
+      });
+    }
+  };
+
   @action sendMsgReceipt = (options = {}) => {
     const { msg } = options;
     constObj.nim.sendMsgReceipt({
