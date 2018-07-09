@@ -10,6 +10,7 @@ import about from './about';
 import chat from './chat';
 import chatHistroy from './chatHistroy';
 import sysmsg from './sysmsg';
+import test from './test';
 
 export default {
   login,
@@ -24,4 +25,5 @@ export default {
   chat,
   chatHistroy,
   sysmsg,
+  test,
 };

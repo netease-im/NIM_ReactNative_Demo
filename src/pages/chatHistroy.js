@@ -45,7 +45,7 @@ export default class Page extends Component {
   }
   scrollToEnd = () => {
     // if (this.chatListRef) {
-    //   this.chatListRef.getNode().scrollTo({ x: 0, y: 100 * RVH });
+    //   this.chatListRef.scrollTo({ x: 0, y: 100 * RVH });
     // }
   }
   loadMore = () => {

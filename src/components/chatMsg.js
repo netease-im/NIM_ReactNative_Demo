@@ -110,6 +110,7 @@ const ChatContent = (props) => {
       viewUrl = { uri: file.pendingUrl };
     } else if (file.url) {
       viewUrl = { uri: file.url };
+      // console.log(viewUrl);
       viewUrl = {
         uri: constObj.nim.viewImageSync({
           url: file.url, // 必填
@@ -128,8 +129,6 @@ const ChatContent = (props) => {
       duration = Math.floor(msg.file.dur / 1000);
     }
     const soundUrl = msg.file.url; // msg.file.ext === 'mp3' ? msg.file.url : msg.file.mp3Url;
-    // console.log(111111111111111, soundUrl);
-    // console.log(222222222222222, msg.file.mp3Url);
     return (
       <TouchableOpacity
         style={{ flexDirection: 'row' }}

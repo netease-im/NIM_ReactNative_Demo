@@ -201,7 +201,7 @@ export class ChatBox extends React.Component {
       clearTimeout(this._scrollTimer);
       this._scrollTimer = setTimeout(() => {
         InteractionManager.runAfterInteractions(() => {
-          this.props.chatListRef.getNode().scrollToEnd();
+          this.props.chatListRef.scrollToEnd();
         });
       }, 500);
     }

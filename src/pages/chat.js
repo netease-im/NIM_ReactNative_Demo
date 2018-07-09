@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { Animated, FlatList, Text, View, TouchableOpacity, InteractionManager } from 'react-native';
+import { FlatList, Text, View, TouchableOpacity, InteractionManager } from 'react-native';
 import { Icon, Header } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import { inject, observer } from 'mobx-react/native';
 import util from '../util';
+import uuid from '../util/uuid';
 import { headerStyle, globalStyle, chatStyle, contactStyle } from '../themes';
 import { RVW } from '../common';
 import GoBack from '../components/goback';
 import { ChatLeft, ChatRight } from '../components/chatMsg';
 import { ChatBox } from '../components/chatBox';
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const constObj = {
+  chatListRef: null,
+};
 
 @inject('nimStore', 'msgAction', 'sessionAction')
 @observer
@@ -47,9 +50,9 @@ export default class Page extends Component {
       return;
     }
     util.debounce(200, () => {
-      if (this.chatListRef) {
+      if (constObj.chatListRef) {
         // console.log('do');
-        this.chatListRef.getNode().scrollToEnd({ animated });
+        constObj.chatListRef.scrollToEnd({ animated });
       }
     });
   }
@@ -166,12 +169,12 @@ export default class Page extends Component {
             onPress={() => { this.setState({ showMore: !this.state.showMore }); }}
           />}
         />
-        <AnimatedFlatList
+        <FlatList
           style={{ marginVertical: 20 }}
           data={this.props.nimStore.currentSessionMsgs}
-          keyExtractor={item => (item.idClient || item.idClientFake || item.key || item.text)}
+          keyExtractor={item => (item.idClient || item.idClientFake || item.key || uuid())}
           renderItem={this.renderItem}
-          ref={(ref) => { this.chatListRef = ref; }}
+          ref={(ref) => { constObj.chatListRef = ref; }}
           onContentSizeChange={() => this.scrollToEnd()}
           onRefresh={this.loadMore}
           refreshing={this.state.refreshing}
@@ -183,7 +186,7 @@ export default class Page extends Component {
             toAccount: this.toAccount,
           }}
           toast={this.toast}
-          chatListRef={this.chatListRef}
+          chatListRef={constObj.chatListRef}
         />
         {this.renderMore()}
         <Toast ref={(ref) => { this.toast = ref; }} position="center" />

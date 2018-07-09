@@ -117,12 +117,13 @@ export default class ChatBox extends React.Component {
       recording: false,
       recordText: holdRecordText,
     });
-    return AudioRecorder.stopRecording().then((filePath) => {
-      if (global.ISANDROID) {
+    if (global.ISANDROID) {
+      return AudioRecorder.stopRecording().then((filePath) => {
         this.finishedRecording(true, filePath);
-      }
-      return Promise.resolve(filePath);
-    });
+      });
+    }
+    AudioRecorder.stopRecording();
+    return Promise.resolve();
   }
   checkRecordingPermission() {
     if (global.ISIOS) {

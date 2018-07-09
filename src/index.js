@@ -42,6 +42,9 @@ const App = createStackNavigator(
     about: {
       screen: Pages.about,
     },
+    test: {
+      screen: Pages.test,
+    },
   },
   {
     initialRouteName: 'session',

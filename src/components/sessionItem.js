@@ -68,6 +68,7 @@ export default class SessionItem extends Component {
       this.props.msgAction.sendMsgReceipt({ msg: session.lastMsg });
     }
     this.props.navigation.navigate('chat', { sessionId });
+    // this.props.navigation.navigate('test', { sessionId });
   }
   render() {
     const columnHeight = 16 * RVW;
