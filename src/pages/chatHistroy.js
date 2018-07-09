@@ -7,7 +7,7 @@ import { ChatLeft, ChatRight } from '../components/chatMsg';
 import GoBack from '../components/goback';
 import util from '../util';
 import uuid from '../util/uuid';
-import { RVH } from '../common';
+// import { RVH } from '../common';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
