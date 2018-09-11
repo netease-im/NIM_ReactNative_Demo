@@ -105,7 +105,7 @@ class Actions {
   initNIM = (account, token, callback) => {
     const self = this;
     constObj.nim = SDK.NIM.getInstance({
-      debug: true,
+      debug: false,
       appKey: configs.appkey,
       account,
       db: true,
