@@ -140,19 +140,19 @@
 			remoteGlobalIDString = 3C86DF461ADF2C930047B81A;
 			remoteInfo = RCTWebSocket;
 		};
-		13A7F5E92147D4FA00AAF6D0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C44962B1F2934AA78118C3D3 /* RNAudio.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 42F559BA1CFC90C400DC3F84;
-			remoteInfo = RNAudio;
-		};
-		13A7F5F02147D4FA00AAF6D0 /* PBXContainerItemProxy */ = {
+		13A7F5A12147D21E00AAF6D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C03E19139A74C669AB373B6 /* RNSound.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
 			remoteInfo = RNSound;
+		};
+		13A7F5A62147D22200AAF6D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C44962B1F2934AA78118C3D3 /* RNAudio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 42F559BA1CFC90C400DC3F84;
+			remoteInfo = RNAudio;
 		};
 		13FE2A8020C1199800F62C83 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -640,18 +640,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13A7F5BC2147D4FA00AAF6D0 /* Products */ = {
+		13A7F59E2147D21E00AAF6D0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13A7F5EA2147D4FA00AAF6D0 /* libRNAudio.a */,
+				13A7F5A22147D21E00AAF6D0 /* libRNSound.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13A7F5ED2147D4FA00AAF6D0 /* Products */ = {
+		13A7F5A32147D22200AAF6D0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13A7F5F12147D4FA00AAF6D0 /* libRNSound.a */,
+				13A7F5A72147D22200AAF6D0 /* libRNAudio.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1015,7 +1015,7 @@
 					ProjectRef = 78175E5D24934B0D9B47743E /* RealmReact.xcodeproj */;
 				},
 				{
-					ProductGroup = 13A7F5BC2147D4FA00AAF6D0 /* Products */;
+					ProductGroup = 13A7F5A32147D22200AAF6D0 /* Products */;
 					ProjectRef = C44962B1F2934AA78118C3D3 /* RNAudio.xcodeproj */;
 				},
 				{
@@ -1023,7 +1023,7 @@
 					ProjectRef = 4E0544BBCA5841979B892598 /* RNImagePicker.xcodeproj */;
 				},
 				{
-					ProductGroup = 13A7F5ED2147D4FA00AAF6D0 /* Products */;
+					ProductGroup = 13A7F59E2147D21E00AAF6D0 /* Products */;
 					ProjectRef = 4C03E19139A74C669AB373B6 /* RNSound.xcodeproj */;
 				},
 				{
@@ -1112,18 +1112,18 @@
 			remoteRef = 139FDEF31B06529B00C62182 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		13A7F5EA2147D4FA00AAF6D0 /* libRNAudio.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNAudio.a;
-			remoteRef = 13A7F5E92147D4FA00AAF6D0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		13A7F5F12147D4FA00AAF6D0 /* libRNSound.a */ = {
+		13A7F5A22147D21E00AAF6D0 /* libRNSound.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNSound.a;
-			remoteRef = 13A7F5F02147D4FA00AAF6D0 /* PBXContainerItemProxy */;
+			remoteRef = 13A7F5A12147D21E00AAF6D0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		13A7F5A72147D22200AAF6D0 /* libRNAudio.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAudio.a;
+			remoteRef = 13A7F5A62147D22200AAF6D0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		13FE2A8120C1199800F62C83 /* libRCTPushNotification.a */ = {

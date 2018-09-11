@@ -6,25 +6,25 @@ import nimStore from '../stores/nim';
 import msgAction from './msg';
 import globalStatus from '../stores/status';
 import util from '../../util';
-import { showNotification } from '../../../nim/NIM_Android_Push';
+// import { showNotification } from '../../../nim/NIM_Android_Push';
 
 // const SDK = require('../../../nim/NIM_Web_SDK.js');
 const SDK = require('../../../nim/NIM_Web_SDK_rn_v5.6.0.js');
 const Realm = require('realm');
 
-const iosPushConfig = {
-  tokenName: 'push_online',
-};
-const androidPushConfig = {
-  xmAppId: '2882303761517806219',
-  xmAppKey: '5971780672219',
-  xmCertificateName: 'RN_MI_PUSH',
-  hwCertificateName: 'RN_HW_PUSH',
-  mzAppId: '113798',
-  mzAppKey: 'b74148973e6040c6abbda2af4c2f6779',
-  mzCertificateName: 'RN_MZ_PUSH',
-  fcmCertificateName: 'RN_FCM_PUSH',
-};
+// const iosPushConfig = {
+//   tokenName: 'push_online',
+// };
+// const androidPushConfig = {
+//   xmAppId: '2882303761517806219',
+//   xmAppKey: '5971780672219',
+//   xmCertificateName: 'RN_MI_PUSH',
+//   hwCertificateName: 'RN_HW_PUSH',
+//   mzAppId: '113798',
+//   mzAppKey: 'b74148973e6040c6abbda2af4c2f6779',
+//   mzCertificateName: 'RN_MZ_PUSH',
+//   fcmCertificateName: 'RN_FCM_PUSH',
+// };
 
 SDK.usePlugin({
   db: Realm,
@@ -105,14 +105,14 @@ class Actions {
   initNIM = (account, token, callback) => {
     const self = this;
     constObj.nim = SDK.NIM.getInstance({
-      debug: false,
+      debug: true,
       appKey: configs.appkey,
       account,
       db: true,
       token,
       syncSessionUnread: true,
-      iosPushConfig,
-      androidPushConfig,
+      // iosPushConfig,
+      // androidPushConfig,
       onwillreconnect() {
       },
       ondisconnect(event) {
@@ -207,17 +207,18 @@ class Actions {
             },
           });
         }
-        if (global.ISANDROID) {
-          let showText = '';
-          if (msg.type === 'text') {
-            showText = msg.text;
-          } else {
-            showText = util.mapMsgType(msg);
-          }
-          showNotification({
-            icon: '', title: msg.from, content: showText, time: `${msg.time}`,
-          });
-        }
+        /* NIM的安卓推送相关 */
+        // if (global.ISANDROID) {
+        //   let showText = '';
+        //   if (msg.type === 'text') {
+        //     showText = msg.text;
+        //   } else {
+        //     showText = util.mapMsgType(msg);
+        //   }
+        //   showNotification({
+        //     icon: '', title: msg.from, content: showText, time: `${msg.time}`,
+        //   });
+        // }
       },
       onroamingmsgs: saveMsgs.bind(this),
       onofflinemsgs: saveMsgs.bind(this),

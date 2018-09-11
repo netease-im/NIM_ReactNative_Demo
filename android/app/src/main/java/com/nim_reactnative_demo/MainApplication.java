@@ -13,8 +13,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.imagepicker.ImagePickerPackage;
-import com.netease.nim.rn.push.NIMPushPackage;
-import com.nim_reactnative_demo.common.log.LogUtil;
 import com.oblador.vectoricons.VectorIconsPackage;
 
 import java.util.Arrays;
@@ -37,8 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
                     new ReactVideoPackage(),
                     new RealmReactPackage(),
                     new VectorIconsPackage(),
-                    new ImagePickerPackage(),
-                    new NIMPushPackage()
+                    new ImagePickerPackage()
             );
         }
 
@@ -57,7 +54,6 @@ public class MainApplication extends Application implements ReactApplication {
     public void onCreate() {
         super.onCreate();
         AppCache.setContext(this);
-        LogUtil.init("app", Log.DEBUG);
         SoLoader.init(this, /* native exopackage */ false);
     }
 }
