@@ -317,7 +317,6 @@ export class ChatBox extends React.Component {
             />
             <ChatAudio
               sendAudio={this.sendVoiceMsg}
-              toast={this.props.toast}
             />
           </View>
         }

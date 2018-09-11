@@ -56,3 +56,4 @@ buck-out/
 
 
 /ios/build
+yarn.lock

@@ -11,7 +11,7 @@ import App from './src';
 // );
 
 const handleConnectivityChange = () => {
-  NetInfo.isConnected.fetch().done((isConnected) => {
+  NetInfo.isConnected.fetch().then((isConnected) => {
     if (!isConnected) {
       Alert.alert('提示', '网络已断开，请连接网络重试');
     }

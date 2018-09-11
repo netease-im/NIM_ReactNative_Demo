@@ -11,7 +11,6 @@ export default class ChatBox extends React.Component {
   static defaultProps = {
     sendAudio() {},
   }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -89,9 +88,7 @@ export default class ChatBox extends React.Component {
       recording: true,
       recordText: releaseRecordText,
     });
-    if (this.props.toast) {
-      this.props.toast.show('松开发送语音消息,\n语音时长最短2秒，\n语音录制中...', 2000);
-    }
+
     return AudioRecorder.startRecording();
   }
   abortRecord = () => {
