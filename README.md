@@ -26,6 +26,14 @@
   - 安卓环境： `react-native log-android`
 7. 更多调试方法参看：[调试RN](https://reactnative.cn/docs/0.51/debugging.html#content)
 
+
+### iOS工程初始化的一些问题
+
+#### Print: Entry, ":CFBundleIdentifier", Does Not Exist
+一般通过`react-native run-ios`，会去下载`boost`、`double-conversion`、`folly`、`glog`等4个包，由于国内镜像源资源有所损坏，所以可能编译报错，开发者可以替换`node_modules/react-native/third-party`中的报内容。
+
+相应的包，demo工程已经放到nim目录下供开发者参考
+
 ### 线上Release包发布
 **线上发布环境，云信sdk初始化配置`debug`选项务必设置为`false`，否则`console.error`可能会导致应用崩溃**
 

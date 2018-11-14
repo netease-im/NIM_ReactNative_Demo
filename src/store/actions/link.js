@@ -9,7 +9,7 @@ import util from '../../util';
 import { showNotification } from '../../../nim/NIM_Android_Push';
 
 // const SDK = require('../../../nim/NIM_Web_SDK.js');
-const SDK = require('../../../nim/NIM_Web_SDK_rn_v5.7.0.js');
+const SDK = require('../../../nim/NIM_Web_SDK_rn_v5.8.0.js');
 const Realm = require('realm');
 
 const iosPushConfig = {

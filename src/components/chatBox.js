@@ -79,9 +79,9 @@ export class ChatBox extends React.Component {
     if (text === '') {
       return;
     }
-    this.setState({
-      msgText: text,
-    });
+    // this.setState({
+    //   msgText: text,
+    // });
     const options = {
       text,
       scene: this.props.options.scene,
@@ -272,11 +272,11 @@ export class ChatBox extends React.Component {
               underlineColorAndroid="transparent"
               ref={(ref) => { this.inputText = ref; }}
               onChangeText={(text) => {
-                if (global.ISANDROID) {
+                // if (global.ISANDROID) {
                   this.setState({
                     msgText: text,
                   });
-                }
+                // }
               }}
               onFocus={() => {
                 this.setState({
