@@ -131,6 +131,8 @@ class Actions {
         });
       },
       onconnect() {
+        nimStore.userID = account;
+        callback(null);
       },
       onerror(event) {
         console.log('error', event.message);
@@ -138,8 +140,7 @@ class Actions {
         // callback(event);
       },
       onsyncdone() {
-        nimStore.userID = account;
-        callback(null);
+        Alert.alert('提示', '账号及离线消息同步完成');
       },
       onmyinfo(info) {
         set(nimStore, 'myInfo', Object.assign(nimStore.myInfo, info));
