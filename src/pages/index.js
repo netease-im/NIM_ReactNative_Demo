@@ -1,4 +1,5 @@
 import login from './login';
+import register from './register';
 import session from './session';
 import contact from './contact';
 import namecard from './namecard';
@@ -14,6 +15,7 @@ import test from './test';
 
 export default {
   login,
+  register,
   session,
   contact,
   namecard,
