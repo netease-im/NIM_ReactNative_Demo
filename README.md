@@ -51,18 +51,9 @@
 这样就导出了 ipa 包用于发布于一些第三方管理平台例如蒲公英，如果需要发布 App Store 配置基本类似，这里不赘述。
 
 #### android发布
-1. 打开app/android/gradle.properties
-2. 取消`android.enableAapt2=false`的注释
-
-``` java
-  android.useDeprecatedNdk=true
-  // 打线上包的时候取消注释，debug的时候需要注释
-  // android.enableAapt2=false
-```
-
-3. 打开控制台，进入app/android文件夹
-4. 执行命令：`./gradlew assembleRelease`
-5. 安卓签名请参考[打包APK](https://reactnative.cn/docs/0.51/signed-apk-android.html#content)
+1. 打开控制台，进入app/android文件夹
+2. 执行命令：`./gradlew assembleRelease`
+3. 安卓签名请参考[打包APK](https://reactnative.cn/docs/signed-apk-android.html#content)
 
 
 ## Demo工程项目
@@ -159,7 +150,7 @@ RN-SDK同时支持含数据库和不含数据库的使用方式，根据开发�
 #### 消息推送
 - iOS推送
   - iOS 端推送配置首先需要开发者去苹果官网申请具有推送能力的证书，可参考 [iOS 推送配置](./iOS苹果推送配置.md)
-  - 配置完证书后，按照 [RN 推送配置](https://reactnative.cn/docs/0.39/pushnotificationios.html)添加相关能力
+  - 配置完证书后，按照 [RN 推送配置](https://reactnative.cn/docs/pushnotificationios.html)添加相关能力
 - 安卓推送
   - 参考demo的安卓推送(java)文件目录在 ./android/nimpush，
   - 参考demo的安卓推送(js)文件目录在 ./nim/NIM_Android_Push.js
