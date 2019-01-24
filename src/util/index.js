@@ -146,6 +146,7 @@ util.parseCustomMsg = function (msg) {
 };
 
 util.parseDisconnectMsg = function (error) {
+  error = error || {}
   const map = {
     PC: '电脑版',
     Web: '网页版',

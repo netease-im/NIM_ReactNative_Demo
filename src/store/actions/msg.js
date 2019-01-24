@@ -112,6 +112,30 @@ class Actions {
   }
 
   @action
+  resendTextMsg = (options) => {
+    console.log('准备重发消息：', options);
+    if (constObj.nim) {
+      constObj.nim.resendMsg({
+        msg: options,
+        done: (error, newMsg, data) => {
+          console.log('重发消息回调：', error, newMsg, data);
+          if (error) {
+            Alert.alert('提示', error.message, [
+              { text: '确认' },
+            ]);
+            newMsg.status = 'fail';
+          }
+          this.replaceSessionMsg({
+            sessionId: newMsg.sessionId,
+            idClient: newMsg.idClient,
+            msg: newMsg,
+          });
+        },
+      });
+    }
+  };
+
+  @action
   sendTextMsg = (options) => {
     if (constObj.nim) {
       const {

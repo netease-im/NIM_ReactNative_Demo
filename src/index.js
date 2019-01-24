@@ -8,6 +8,9 @@ const App = createStackNavigator(
     login: {
       screen: Pages.login,
     },
+    register: {
+      screen: Pages.register,
+    },
     // home: {
     //   screen: TabNavigator,
     // },

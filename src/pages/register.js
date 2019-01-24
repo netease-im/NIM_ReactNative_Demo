@@ -8,13 +8,14 @@ import { globalStyle, baseBlueColor, headerStyle } from '../themes';
 import { RVW, RFT } from '../common';
 import MD5 from '../util/md5';
 import constObj from '../store/constant';
+import configs from '../configs';
+import util from '../util';
 
 const localStyle = {
   wrapper: {
     backgroundColor: baseBlueColor,
   },
 };
-
 @inject('nimStore', 'linkAction')
 @observer
 export default class Page extends React.Component {
@@ -22,25 +23,9 @@ export default class Page extends React.Component {
     super(props);
     this.state = {
       account: '',
+      nickname: '',
       password: '',
     };
-  }
-  componentWillMount = () => {
-    AsyncStorage.getItem('account').then((account) => {
-      if (account) {
-        this.setState({
-          account,
-        });
-        this.inputText.focus()
-      }
-    });
-    AsyncStorage.getItem('password').then((password) => {
-      if (password) {
-        this.setState({
-          password,
-        });
-      }
-    });
   }
   setAccount = (text) => {
     this.setState({
@@ -55,6 +40,19 @@ export default class Page extends React.Component {
     }
     if (/[^a-zA-Z0-9]/.test(account)) {
       this.toast.show('账号限字母或数字')
+      return
+    }
+    return true
+  }
+  setNickname = (text) => {
+    this.setState({
+      nickname: text,
+    });
+  }
+  checkNickname = () => {
+    let { nickname } = this.state;
+    if (nickname.trim() === '' || nickname.length > 10) {
+      this.toast.show('昵称长度错误');
       return
     }
     return true
@@ -81,46 +79,59 @@ export default class Page extends React.Component {
       password: '',
     });
   }
-  login = () => {
+  register = () => {
     NetInfo.isConnected.fetch().then((isConnected) => {
       if (isConnected) {
-        this.doLogin();
+        this.doRegister();
       } else {
         this.toast.show('网络状况不佳');
       }
     });
   }
-  doLogin = () => {
-    if (this.props.nimStore.userId && constObj.nim) {
-      this.props.navigation.navigate('session');
-      return;
-    }
-    if (!this.checkAccount() || !this.checkPwd()) {
+  doRegister = () => {
+    if (!this.checkAccount() || !this.checkNickname() || !this.checkPwd()) {
       return
     }
-    let { account, password } = this.state;
-    account = account.toLowerCase();
-    AsyncStorage.setItem('account', account);
-    AsyncStorage.setItem('password', password);
-    const token = MD5(this.state.password);
-    // if (this.props.)
-    this.props.linkAction.login(account, token, (error) => {
-      if (error) {
-        // if (this.toast) {
-        //   this.toast.show(util.parseDisconnectMsg(error));
-        // }
-        this.props.navigation.navigate('login');
-      } else {
-        if (this.props.navigation.state.routeName === 'login') {
-          this.props.navigation.navigate('session');
-        }
-        AsyncStorage.setItem('isLogin', 'true');
-      }
-    });
+    let { account, nickname, password } = this.state;
+    const sdktoken = MD5(password)
+    let accountLowerCase = account.toLowerCase()
+    fetch(`${configs.postUrl}/api/createDemoUser`,{
+       method:'POST',
+       mode: 'cors',
+       headers:{
+         'Content-Type': 'application/x-www-form-urlencoded',
+         'appkey': configs.appkey
+       },
+       body: util.object2query({
+         username: accountLowerCase,
+         nickname: nickname,
+         password: sdktoken
+       })
+     }).then((response) => {
+       if(response.ok){
+         return response.json()
+       }
+     }).then((json) => {
+       if (json.res === 200) {
+         this.toast.show('注册成功')
+         AsyncStorage.setItem('account', accountLowerCase);
+         this.props.navigation.push('login');
+         this.setState({
+           account: '',
+           nickname: '',
+           password: '',
+         });
+       } else {
+         this.toast.show(json.errmsg)
+       }
+     }).catch(error => {
+       this.toast.show('网络断开或其他未知错误')
+     }).done()
   }
-  toRegisterPage = () => {
-    this.props.navigation.navigate('register');
+  toLoginPage = () => {
+    this.props.navigation.navigate('login');
   }
+
   render() {
     return (
       // View 用以适配iPhoneX
@@ -135,19 +146,18 @@ export default class Page extends React.Component {
               fontSize: 3.6 * RFT,
               color: baseBlueColor,
             }}
-            onPress={this.login}
-            disabled={this.state.account.trim() === '' || this.state.password.trim() === ''}
-            buttonStyle={{
+            onPress={this.register}
+            disabled={this.state.account.trim() === '' || this.state.nickname.trim() === '' || this.state.password.trim() === ''}  buttonStyle={{
               width: 12 * RVW,
               height: 7 * RFT,
               backgroundColor: '#fff',
               borderRadius: 3
             }}
           />}
-          centerComponent={{ text: '登录', style: headerStyle.center }}
+          centerComponent={{ text: '注册', style: headerStyle.center }}
         />
         <View
-          style={[globalStyle.container, globalStyle.center, localStyle.wrapper]}
+        style={[globalStyle.container, globalStyle.center, localStyle.wrapper]}
         >
           <View
             style={{
@@ -161,12 +171,24 @@ export default class Page extends React.Component {
               inputContainerStyle={{ width: 80 * RVW }}
               inputStyle={{ color: '#fff', top: 2 }}
               leftIcon={{ type: 'font-awesome', name: 'user', color: '#9ac6f7' }}
-              placeholder="请输入账号"
+              placeholder="账号：限20位字母或者数字"
+              maxLength={20}
               placeholderTextColor="#e0e0e0"
               onChangeText={this.setAccount}
               onBlur={this.checkAccount}
               value={this.state.account}
-              maxLength={20}
+              selectionColor="#fff"
+            />
+            <Input
+              inputContainerStyle={{ width: 80 * RVW }}
+              inputStyle={{ color: '#fff', top: 2 }}
+              leftIcon={{ type: 'font-awesome', name: 'user-o', color: '#9ac6f7' }}
+              placeholder="昵称：限10位汉字、字母或者数字"
+              maxLength={10}
+              placeholderTextColor="#e0e0e0"
+              onChangeText={this.setNickname}
+              onBlur={this.checkNickname}
+              value={this.state.nickname}
               selectionColor="#fff"
             />
             <Input
@@ -174,22 +196,21 @@ export default class Page extends React.Component {
               inputContainerStyle={{ width: 80 * RVW }}
               inputStyle={{ color: '#fff', top: 2 }}
               leftIcon={{ type: 'font-awesome', name: 'lock', color: '#9ac6f7' }}
-              placeholder="请输入密码"
+              placeholder="密码：6~20位字母或者数字"
+              maxLength={20}
               placeholderTextColor="#e0e0e0"
               onChangeText={this.setToken}
               onFocus={this.clearPwd}
               onBlur={this.checkPwd}
               value={this.state.password}
-              maxLength={20}
               selectionColor="#fff"
-              ref={(ref) => { this.inputText = ref; }}
             />
-            <TouchableOpacity onPress={this.toRegisterPage} >
+            <TouchableOpacity onPress={this.toLoginPage} >
               <Text style={{
                 marginTop: 10 * RVW,
                 color: '#fff',
                 textAlign: 'center'
-              }}>注册</Text>
+              }}>已有账号？直接登录</Text>
             </TouchableOpacity>
           </View>
           <Toast ref={(ref) => { this.toast = ref; }} position="center" />

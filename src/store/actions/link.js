@@ -8,8 +8,7 @@ import globalStatus from '../stores/status';
 import util from '../../util';
 import { showNotification } from '../../../nim/NIM_Android_Push';
 
-// const SDK = require('../../../nim/NIM_Web_SDK.js');
-const SDK = require('../../../nim/NIM_Web_SDK_rn_v5.8.0.js');
+const SDK = require('../../../nim/NIM_Web_SDK_rn_v6.1.0.js');
 const Realm = require('realm');
 
 const iosPushConfig = {
@@ -134,8 +133,8 @@ class Actions {
         nimStore.userID = account;
         callback(null);
       },
-      onerror(event) {
-        console.log('error', event.message);
+      onerror(event, obj) {
+        console.log('IM error:', event, obj);
         // self.destroyNIM();
         // callback(event);
       },
@@ -275,4 +274,3 @@ class Actions {
 }
 
 export default new Actions();
-

@@ -146,12 +146,19 @@ export default class Page extends Component {
         msg={msg}
         msgAction={this.props.msgAction}
         nimStore={this.props.nimStore}
+        resendTextMag={this.resendTextMag}
       />);
     } else if (msg.type === 'timeTag') {
       return <Text style={chatStyle.timetag}>----  {msg.text}  ----</Text>;
     }
     return null;
   })
+  resendTextMag = (msg) => {
+    if (!msg) {
+      return
+    }
+    this.props.msgAction.resendTextMsg(msg);
+  }
   render() {
     const { navigation } = this.props;
     return (

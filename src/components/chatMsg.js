@@ -221,7 +221,7 @@ export const ChatLeft = (props) => {
 
 
 export const ChatRight = (props) => {
-  const { msg } = props;
+  const { msg, resendTextMag } = props;
   const avatar = getThumbnail(props);
   return (
     <View style={[chatStyle.wrapper, chatStyle.right]}>
@@ -232,6 +232,7 @@ export const ChatRight = (props) => {
           size={5 * RFT}
           color="#f00"
           iconStyle={chatStyle.icon}
+          onPress={() => { resendTextMag(msg) }}
         />
         :
         null
