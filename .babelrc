@@ -1,8 +1,16 @@
 {
   "presets": [
-    "react-native"
+    "react-native",
+    "@babel/preset-flow",
+    "module:metro-react-native-babel-preset"
   ],
   "plugins": [
-    "transform-decorators-legacy"
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ]
   ]
 }
