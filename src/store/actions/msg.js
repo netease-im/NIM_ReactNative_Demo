@@ -342,7 +342,7 @@ class Actions {
     constObj.nim.sendTipMsg({
       isLocal: true,
       scene: msg.scene,
-      to: toAccount,
+      to: msg.target,
       tip,
       time: msg.time,
       done: (tipErr, tipMsg) => {
