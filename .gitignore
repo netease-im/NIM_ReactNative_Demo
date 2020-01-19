@@ -58,3 +58,5 @@ buck-out/
 /ios/build
 yarn.lock
 .history
+
+.vscode/
