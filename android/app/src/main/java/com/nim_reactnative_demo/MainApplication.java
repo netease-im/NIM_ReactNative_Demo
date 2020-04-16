@@ -2,21 +2,24 @@ package com.nim_reactnative_demo;
 
 import android.app.Application;
 
-import com.facebook.react.ReactApplication;
-import io.realm.react.RealmReactPackage;
 import com.brentvatne.react.ReactVideoPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.zmxv.RNSound.RNSoundPackage;
-import com.imagepicker.ImagePickerPackage;
-import com.rnim.rn.audio.ReactNativeAudioPackage;
+import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.huawei.hms.support.common.ActivityMgr;
+import com.imagepicker.ImagePickerPackage;
 import com.netease.nim.rn.push.NIMPushPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.rnfs.RNFSPackage;
+import com.rnim.rn.audio.ReactNativeAudioPackage;
+import com.zmxv.RNSound.RNSoundPackage;
 
 import java.util.Arrays;
 import java.util.List;
+
+import io.realm.react.RealmReactPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -30,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
             new RealmReactPackage(),
             new ReactVideoPackage(),
             new VectorIconsPackage(),
@@ -55,5 +59,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    ActivityMgr.INST.init(this);
   }
 }

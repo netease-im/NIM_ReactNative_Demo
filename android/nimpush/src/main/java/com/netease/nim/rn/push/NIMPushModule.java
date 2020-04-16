@@ -52,11 +52,17 @@ public class NIMPushModule extends ReactContextBaseJavaModule implements Activit
             String xmAppId,
             String xmAppKey,
             String xmCertificateName,
+            String hwAppId,
             String hwCertificateName,
             String mzAppId,
             String mzAppKey,
             String mzCertificateName,
             String fcmCertificateName,
+            String vivoCertificateName,
+            String oppoAppId,
+            String oppoAppKey,
+            String oppoAppSercet,
+            String oppoCertificateName,
             final Callback tokenCallback) {
 
         RNLibOptions options = new RNLibOptions();
@@ -72,9 +78,15 @@ public class NIMPushModule extends ReactContextBaseJavaModule implements Activit
         pushConfig.mzAppKey = mzAppKey;
         pushConfig.mzCertificateName = mzCertificateName;
 
+        pushConfig.hwAppId = hwAppId;
         pushConfig.hwCertificateName = hwCertificateName;
 
         pushConfig.fcmCertificateName = fcmCertificateName;
+        pushConfig.vivoCertificateName = vivoCertificateName;
+        pushConfig.oppoAppId = oppoAppId;
+        pushConfig.oppoAppKey = oppoAppKey;
+        pushConfig.oppoAppSercet = oppoAppSercet;
+        pushConfig.oppoCertificateName = oppoCertificateName;
 
 
         options.mixPushConfig = pushConfig;

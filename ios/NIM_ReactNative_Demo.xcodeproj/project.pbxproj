@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -40,12 +41,14 @@
 		3596021F82BA441B84F6B125 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A04125021FCF457CA6102403 /* libz.tbd */; };
 		37213599AE844788A435346A /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69EE4260DE8D461690B50258 /* libRealmReact.a */; };
 		3C55F46898D54D9490946C5E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41BEE8351E8B4363B89D9083 /* SimpleLineIcons.ttf */; };
+		3F90D3DB230A7C10000424A1 /* RNFS.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CB9005C136D471280384B7D /* RNFS.xcodeproj */; };
 		478E427402354778BD5899A2 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E5098777A84BF593840116 /* libRNImagePicker.a */; };
 		47CDCFC3C17E4216BF0B4C51 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F530DEAD13C4B87BA49F861 /* libc++.tbd */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6038A37779554435A8F2600A /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4065996AFA1649B0AB9FAE34 /* libRCTVideo.a */; };
 		62D2B2CD8FD648319E503254 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F749B600C07242C1A2D7F00B /* MaterialCommunityIcons.ttf */; };
 		6EE07F2A5BCC412B9174D022 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B847080CF8D4D98B759F65C /* Entypo.ttf */; };
+		7766469B153E45049DEA1F3D /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 575FA47043354ACA92A3E2A0 /* libRNFS.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9118205B9F904AFDA58B0804 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C23A0544513944A99891905D /* Feather.ttf */; };
 		A126A72920C2D56D00ECF91D /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = A126A6FD20C2D56D00ECF91D /* UIView+Toast.m */; };
@@ -349,6 +352,27 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		3F90D3D1230A7B0B000424A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91B099A4D70F4DE88A005105 /* RNVectorIcons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A39873CE1EA65EE60051E01A;
+			remoteInfo = "RNVectorIcons-tvOS";
+		};
+		3F90D3D7230A7B0B000424A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CB9005C136D471280384B7D /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
+		};
+		3F90D3D9230A7B0B000424A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5CB9005C136D471280384B7D /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6456441F1EB8DA9100672408;
+			remoteInfo = "RNFS-tvOS";
+		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -462,6 +486,8 @@
 		4C03E19139A74C669AB373B6 /* RNSound.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		4E0544BBCA5841979B892598 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		53548E25B79F473381D08551 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		575FA47043354ACA92A3E2A0 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
+		5CB9005C136D471280384B7D /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		69EE4260DE8D461690B50258 /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
 		6F530DEAD13C4B87BA49F861 /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -500,6 +526,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F90D3DB230A7C10000424A1 /* RNFS.xcodeproj in Frameworks */,
 				A179FF6620C4EB870061361E /* libRCTVideo.a in Frameworks */,
 				13FE2AA020C119A900F62C83 /* libRCTPushNotification.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -523,6 +550,7 @@
 				6038A37779554435A8F2600A /* libRCTVideo.a in Frameworks */,
 				D0031A0E90FB43C8BBB70AC4 /* libRNSound.a in Frameworks */,
 				C1C43C60AD534A4FAA86AF47 /* libRNAudio.a in Frameworks */,
+				7766469B153E45049DEA1F3D /* libRNFS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +648,7 @@
 				4065996AFA1649B0AB9FAE34 /* libRCTVideo.a */,
 				E12B55A7DAE24D159DB0ACF1 /* libRNSound.a */,
 				D58840537A6D4B9BAA43F7EB /* libRNAudio.a */,
+				575FA47043354ACA92A3E2A0 /* libRNFS.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -636,6 +665,7 @@
 			isa = PBXGroup;
 			children = (
 				1330ABFA20BBF1DF000720AF /* libRNVectorIcons.a */,
+				3F90D3D2230A7B0B000424A1 /* libRNVectorIcons-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -761,6 +791,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		3F90D3D3230A7B0B000424A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F90D3D8230A7B0B000424A1 /* libRNFS.a */,
+				3F90D3DA230A7B0B000424A1 /* libRNFS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -802,6 +841,7 @@
 				0407E678E26241BCA2E1CF1D /* RCTVideo.xcodeproj */,
 				4C03E19139A74C669AB373B6 /* RNSound.xcodeproj */,
 				C44962B1F2934AA78118C3D3 /* RNAudio.xcodeproj */,
+				5CB9005C136D471280384B7D /* RNFS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -962,7 +1002,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 569GNZ5392;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -988,6 +1028,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1062,6 +1103,10 @@
 				{
 					ProductGroup = 13A7F5BC2147D4FA00AAF6D0 /* Products */;
 					ProjectRef = C44962B1F2934AA78118C3D3 /* RNAudio.xcodeproj */;
+				},
+				{
+					ProductGroup = 3F90D3D3230A7B0B000424A1 /* Products */;
+					ProjectRef = 5CB9005C136D471280384B7D /* RNFS.xcodeproj */;
 				},
 				{
 					ProductGroup = 1330ABEC20BBF1DE000720AF /* Products */;
@@ -1360,6 +1405,27 @@
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3F90D3D2230A7B0B000424A1 /* libRNVectorIcons-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNVectorIcons-tvOS.a";
+			remoteRef = 3F90D3D1230A7B0B000424A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3F90D3D8230A7B0B000424A1 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 3F90D3D7230A7B0B000424A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3F90D3DA230A7B0B000424A1 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 3F90D3D9230A7B0B000424A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1599,12 +1665,14 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = NIM_ReactNative_DemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1632,12 +1700,14 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = NIM_ReactNative_DemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1653,8 +1723,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NIM_ReactNative_Demo/NIM_ReactNative_Demo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 569GNZ5392;
@@ -1680,6 +1750,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = NIM_ReactNative_Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1690,7 +1761,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.NIM-ReactNative-Demo";
 				PRODUCT_NAME = NIM_ReactNative_Demo;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = NIMReactNativeDemo_Distribution;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1700,8 +1771,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NIM_ReactNative_Demo/NIM_ReactNative_Demo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 569GNZ5392;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1726,6 +1797,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = NIM_ReactNative_Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1736,7 +1808,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.NIM-ReactNative-Demo";
 				PRODUCT_NAME = NIM_ReactNative_Demo;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = NIMReactNativeDemo_Distribution;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1764,11 +1836,13 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = "NIM_ReactNative_Demo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1805,11 +1879,13 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = "NIM_ReactNative_Demo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1845,11 +1921,13 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = "NIM_ReactNative_Demo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1885,11 +1963,13 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = "NIM_ReactNative_Demo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

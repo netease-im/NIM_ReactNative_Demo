@@ -56,7 +56,6 @@ buck-out/
 
 
 /ios/build
-yarn.lock
 .history
-
-.vscode/
+my-aos-release-key.keystore
+.vscode
