@@ -159,7 +159,7 @@ export default class Page extends React.Component {
             </View>
             <Input
               inputContainerStyle={{ width: 80 * RVW }}
-              inputStyle={{ color: '#fff', top: 2 }}
+              inputStyle={{ color: '#fff', top: 2, height: 50 }}
               leftIcon={{ type: 'font-awesome', name: 'user', color: '#9ac6f7' }}
               placeholder="请输入账号"
               placeholderTextColor="#e0e0e0"
@@ -172,7 +172,7 @@ export default class Page extends React.Component {
             <Input
               secureTextEntry
               inputContainerStyle={{ width: 80 * RVW }}
-              inputStyle={{ color: '#fff', top: 2 }}
+              inputStyle={{ color: '#fff', top: 2, height: 50 }}
               leftIcon={{ type: 'font-awesome', name: 'lock', color: '#9ac6f7' }}
               placeholder="请输入密码"
               placeholderTextColor="#e0e0e0"

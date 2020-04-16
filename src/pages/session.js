@@ -96,7 +96,7 @@ export default class Page extends Component {
             this.forceUpdate();
           });
         }
-      } else if (item.scene === 'team') {
+      } else {
         continue;
       }
       const lastMsg = item.lastMsg || {};
@@ -132,7 +132,7 @@ export default class Page extends Component {
       <View style={globalStyle.container}>
         <Header
           outerContainerStyles={headerStyle.wrapper}
-          centerComponent={{ text: '云信demo', style: headerStyle.center }}
+          centerComponent={{ text: '云信RN', style: headerStyle.center }}
         />
         <TouchableOpacity
           style={globalStyle.container}

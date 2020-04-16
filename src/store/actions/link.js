@@ -8,8 +8,9 @@ import globalStatus from '../stores/status';
 import util from '../../util';
 import { showNotification } from '../../../nim/NIM_Android_Push';
 
-const SDK = require('../../../nim/NIM_Web_SDK_rn_v6.1.0.js');
+const SDK = require('../../../nim/NIM_Web_SDK_rn_v7.2.0.js');
 const Realm = require('realm');
+const RNFS = require('react-native-fs')
 
 const iosPushConfig = {
   tokenName: 'push_online',
@@ -18,15 +19,24 @@ const androidPushConfig = {
   xmAppId: '2882303761517806219',
   xmAppKey: '5971780672219',
   xmCertificateName: 'RN_MI_PUSH',
+  hwAppId: '101612397',
   hwCertificateName: 'RN_HW_PUSH',
   mzAppId: '113798',
   mzAppKey: 'b74148973e6040c6abbda2af4c2f6779',
   mzCertificateName: 'RN_MZ_PUSH',
   fcmCertificateName: 'RN_FCM_PUSH',
+  vivoCertificateName: "RN_VIVO_PUSH",
+  oppoAppId: "30143442",
+  oppoAppKey: "e5acc9c313254c2f91aab7258d61981d",
+  oppoAppSercet: "0a6b35563ed04823b5765c994bb0a023",
+  oppoCertificateName: "RN_OPPO_PUSH"
 };
 
 SDK.usePlugin({
   db: Realm,
+});
+SDK.usePlugin({
+  rnfs: RNFS,
 });
 function onTeam(teams) {
   if (!Array.isArray(teams)) {
@@ -104,11 +114,11 @@ class Actions {
   initNIM = (account, token, callback) => {
     const self = this;
     constObj.nim = SDK.NIM.getInstance({
-      debug: false,
+      // debug: true,
       appKey: configs.appkey,
       account,
-      db: true,
       token,
+      db: true,
       syncSessionUnread: true,
       iosPushConfig,
       androidPushConfig,
