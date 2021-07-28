@@ -330,3 +330,8 @@ RN-SDK同时支持含数据库和不含数据库的使用方式，根据开发�
 ![](https://yx-web.nos-hz.163yun.com/demo/reactnative/contact.png)
 ![](https://yx-web.nos-hz.163yun.com/demo/reactnative/friends.png)
 ![](https://yx-web.nos-hz.163yun.com/demo/reactnative/namecard.png)
+
+
+**推荐客户得京东卡，首次推荐成单得3000元京东卡，连续推荐4500元/单，上不封顶。点击参与https://yunxin.163.com/promotion/recommend**
+
+![main](https://github.com/netease-kit/NIM_iOS_UIKit/blob/master/activity-1.png)
