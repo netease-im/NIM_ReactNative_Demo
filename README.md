@@ -1,3 +1,7 @@
+0.57.x 的 RN demo 将不在维护，新的 demo 工程参见 [NIM_ReactNative_Demo_0.61.5](https://github.com/netease-im/NIM_ReactNative_Demo_0.61.5)
+
+0.57.x RN demo will not be maintained. About the new demo project, see [NIM_ReactNative_Demo_0.61.5](https://github.com/netease-im/NIM_ReactNative_Demo_0.61.5)
+
 # 云信 WebSDK ReactNative Demo 导读
 
 ## 初始化
